@@ -46,6 +46,8 @@ const WishListPage = () => {
     if (updateWishResponse.message) {
       alert(updateWishResponse.message)
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateWishResponse])
 
   return (
@@ -148,9 +150,9 @@ const WishListPage = () => {
           <Typography component={'p'}>
             Oiii gente, se vocês já estão aqui,{' '}
             <b>se cosiderem muito importante para nós!!</b> Essa aqui é uma
-            listinha básica de tudo que estamos precisando ''icone'' Ficaremos
-            muito felizes e gratos por qualquer lembrança que vocês escolherem.
-            Desde já agradecemos
+            listinha básica de tudo que estamos precisando icone Ficaremos muito
+            felizes e gratos por qualquer lembrança que vocês escolherem. Desde
+            já agradecemos
           </Typography>
         </Box>
 
