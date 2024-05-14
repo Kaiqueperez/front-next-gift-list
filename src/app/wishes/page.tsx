@@ -23,9 +23,6 @@ const WishListPage = () => {
 
   const wishes = JSON.parse(localStorage.getItem('wishes-gift')!)
 
-  console.log(wishes);
-  
-
   const { handleModal, isModalOpen } = useModalContext()
 
   const [gifter, setGifter] = useState({
