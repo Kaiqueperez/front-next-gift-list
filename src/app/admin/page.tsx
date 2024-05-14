@@ -1,28 +1,33 @@
 'use client'
+
+import { FormWishCreator } from '@/components/Forms/WishCreator'
+import { useWishListContext } from '@/contexts'
 import { useModalContext } from '@/contexts/modalContext'
-import { wishesRepositoryImpl } from '@/repositories'
 import { modalStyle } from '@/styles/constants'
 import { WishCreateProps } from '@/types'
-import { createWish } from '@/useCases'
-import SendIcon from '@mui/icons-material/Send'
-import { Box, Button, Modal, TextField, Typography } from '@mui/material'
+import { Box, Modal, Typography } from '@mui/material'
 import { useState } from 'react'
 
 const AdminPage = () => {
+  const { wishCreator } = useWishListContext()
   const [wish, setWish] = useState<WishCreateProps>({
     name: '',
     url: '',
   })
+  const { handleModal, isModalOpen } = useModalContext()
   const [message, setMessage] = useState('')
 
-  const { handleModal, isModalOpen } = useModalContext()
-
-  const sendWishCreator = async (wish: WishCreateProps) => {
-    const response = await createWish(wish, wishesRepositoryImpl)
-
+  const handleWishCreator = async (wish: WishCreateProps) => {
+    const response = await wishCreator(wish)
     setMessage(response.message)
     handleModal()
     setWish({ name: '', url: '' })
+  }
+  const handleGiftValues = (key: string, value: string) => {
+    setWish((prev) => ({
+      ...prev,
+      [key]: value,
+    }))
   }
 
   return (
@@ -34,47 +39,22 @@ const AdminPage = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalStyle['modalAdminPage']}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            textAlign={'center'}
+          >
             {message}
           </Typography>
         </Box>
       </Modal>
 
-      <Box
-        display={'flex'}
-        flexDirection={'column'}
-        alignItems={'center'}
-        gap={2}
-      >
-        <Typography variant="h6" component="h2">
-          Cadastro de desejos
-        </Typography>
-        <TextField
-          id="filled-basic"
-          label="Cadastre seu desejo"
-          variant="filled"
-          value={wish.name}
-          onChange={(e) =>
-            setWish((prev) => ({ ...prev, name: e.target.value }))
-          }
-        />
-        <TextField
-          id="filled-basic"
-          label="Link do desejo"
-          variant="filled"
-          value={wish.url}
-          onChange={(e) =>
-            setWish((prev) => ({ ...prev, url: e.target.value }))
-          }
-        />
-        <Button
-          onClick={() => sendWishCreator(wish)}
-          variant="contained"
-          endIcon={<SendIcon />}
-        >
-          Send
-        </Button>
-      </Box>
+      <FormWishCreator
+        handleGiftValues={handleGiftValues}
+        handleWishCreator={handleWishCreator}
+        wish={wish}
+      />
     </>
   )
 }

@@ -37,7 +37,7 @@ export const WishList = ({
           <ListItem
             key={wish.id}
             onClick={
-              isNeedShowAllWishes
+              isNeedShowAllWishes === null
                 ? () => {
                     handleSetGifter!((prev) => ({
                       ...prev,

@@ -1,10 +1,14 @@
 import { wishesRepositoryImpl } from '@/repositories'
-import { WishProps, WishUpdateResponse } from '@/types'
-import { getAllWishes } from '@/useCases'
+import {
+  CreateWishResponse,
+  WishCreateProps,
+  WishProps,
+  WishUpdateResponse,
+} from '@/types'
+import { createWish, getAllWishes } from '@/useCases'
 import { updateWishWithPerson } from '@/useCases/updateWishWithPerson'
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 type WishListContextProps = {
-  wishes: WishProps[]
   isLoading: boolean
   fetchAllWishes: () => Promise<void>
   associatePersonWithWish: (gifter: {
@@ -14,6 +18,8 @@ type WishListContextProps = {
     url: string
   }) => Promise<void>
 
+  wishCreator: (wish: WishCreateProps) => Promise<CreateWishResponse>
+
   updateWishResponse: WishUpdateResponse
 }
 type WishListProviderProps = {
@@ -22,19 +28,28 @@ type WishListProviderProps = {
 export const WishListProvider: React.FC<WishListProviderProps> = ({
   children,
 }) => {
-  const [wishes, setWishes] = useState<WishProps[]>([])
   const [isLoading, setIsloading] = useState(false)
   const [updateWishResponse, setUpdateWishResponse] = useState({
     message: '',
     showBuyButton: false,
     buyMessage: '',
+    gifts: [],
   })
+
+  const wishCreator = async (wish: WishCreateProps) => {
+    const response = await createWish(wish, wishesRepositoryImpl)
+    return response
+  }
+
+  const handleLocalStorage = (wishList: WishProps[]) => {
+    localStorage.setItem('wishes-gift', JSON.stringify(wishList))
+  }
 
   const fetchAllWishes = async () => {
     setIsloading(true)
     const allWishes = await getAllWishes(wishesRepositoryImpl)
 
-    setWishes(allWishes)
+    handleLocalStorage(allWishes)
   }
 
   const associatePersonWithWish = async (gifter: {
@@ -44,11 +59,14 @@ export const WishListProvider: React.FC<WishListProviderProps> = ({
     url: string
   }) => {
     try {
-      const { message, showBuyButton, buyMessage } = await updateWishWithPerson(
-        gifter,
-        wishesRepositoryImpl
-      )
+      const { personName } = gifter
 
+      personName !== '' ? (gifter.choosen = true) : null
+
+      const { message, showBuyButton, buyMessage, gifts } =
+        await updateWishWithPerson(gifter, wishesRepositoryImpl)
+
+      handleLocalStorage(gifts)
       setUpdateWishResponse((prev) => ({
         ...prev,
         message,
@@ -58,13 +76,17 @@ export const WishListProvider: React.FC<WishListProviderProps> = ({
     } catch (error) {}
   }
 
+  useEffect(() => {
+    fetchAllWishes()
+  }, [])
+
   return (
     <WishListContext.Provider
       value={{
-        wishes,
         isLoading,
         fetchAllWishes,
         associatePersonWithWish,
+        wishCreator,
         updateWishResponse,
       }}
     >

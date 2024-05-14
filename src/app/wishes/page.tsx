@@ -15,9 +15,19 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 const WishListPage = () => {
+  const { isLoading, associatePersonWithWish, updateWishResponse } =
+    useWishListContext()
+
+  const wishes = JSON.parse(localStorage.getItem('wishes-gift')!)
+
+  console.log(wishes);
+  
+
+  const { handleModal, isModalOpen } = useModalContext()
+
   const [gifter, setGifter] = useState({
     id: '',
     personName: '',
@@ -25,30 +35,10 @@ const WishListPage = () => {
     url: '',
   })
 
-  const {
-    isLoading,
-    wishes,
-    associatePersonWithWish,
-    updateWishResponse,
-    fetchAllWishes,
-  } = useWishListContext()
-
-  const { handleModal, isModalOpen } = useModalContext()
-
   const clearState = () => {
     handleModal()
     setGifter({ choosen: false, id: '', personName: '', url: '' })
   }
-
-  useEffect(() => {
-    fetchAllWishes()
-
-    if (updateWishResponse.message) {
-      alert(updateWishResponse.message)
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [updateWishResponse])
 
   return (
     <Box marginBottom={8}>
@@ -72,33 +62,37 @@ const WishListPage = () => {
             justifyContent={'space-between'}
             gap={2}
           >
-            <TextField
-              onChange={(e) =>
-                setGifter((prev) => ({
-                  ...prev,
-                  personName: e.target.value,
-                }))
-              }
-              id="filled-basic"
-              label="Seu nome"
-              variant="filled"
-              value={gifter.personName}
-            />
-            <Button
-              disabled={!gifter.personName}
-              onClick={() => {
-                associatePersonWithWish(gifter)
-                setGifter((prev) => ({
-                  ...prev,
-                  personName: '',
-                  choosen: true,
-                }))
-              }}
-              variant="contained"
-              endIcon={<SendIcon />}
-            >
-              Enviar
-            </Button>
+            {gifter.choosen ? null : (
+              <>
+                <TextField
+                  onChange={(e) =>
+                    setGifter((prev) => ({
+                      ...prev,
+                      personName: e.target.value,
+                    }))
+                  }
+                  id="filled-basic"
+                  label="Seu nome"
+                  variant="filled"
+                  value={gifter.personName}
+                />
+                <Button
+                  disabled={!gifter.personName}
+                  onClick={() => {
+                    associatePersonWithWish(gifter)
+                    setGifter((prev) => ({
+                      ...prev,
+                      personName: '',
+                      choosen: true,
+                    }))
+                  }}
+                  variant="contained"
+                  endIcon={<SendIcon />}
+                >
+                  Enviar
+                </Button>
+              </>
+            )}
 
             {updateWishResponse.showBuyButton && gifter.choosen ? (
               <Box
@@ -117,10 +111,7 @@ const WishListPage = () => {
                   <Typography component={'p'}>
                     {updateWishResponse.buyMessage}
                   </Typography>
-                  <Button
-                    onClick={() => associatePersonWithWish(gifter)}
-                    variant="contained"
-                  >
+                  <Button variant="contained">
                     <CustomLink
                       href={gifter.url}
                       fontSizeIcon={'small'}
@@ -172,15 +163,13 @@ const WishListPage = () => {
           <Skeleton variant="rectangular" width={210} height={118} />
         )}
 
-        <Box>
-          <CustomLink
-            href={'/'}
-            fontSizeIcon="small"
-            textContent={'Voltar para home '}
-            Icon={NorthWestIcon}
-            sideIcon="left"
-          />
-        </Box>
+        <CustomLink
+          href={'/'}
+          fontSizeIcon="small"
+          textContent={'Voltar para home '}
+          Icon={NorthWestIcon}
+          sideIcon="left"
+        />
       </Box>
     </Box>
   )

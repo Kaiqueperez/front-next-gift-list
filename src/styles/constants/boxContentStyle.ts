@@ -21,7 +21,6 @@ const modalAdmin = {
   transform: 'translate(-50%, -50%)',
   display: 'flex',
   alignItems: 'center',
-  height: 50,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,

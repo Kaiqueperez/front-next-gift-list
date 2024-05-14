@@ -22,6 +22,7 @@ export type WishUpdateResponse = {
   message: string
   showBuyButton: boolean
   buyMessage: string
+  gifts: WishProps[]
 }
 
 export type CreateWishResponse = {
