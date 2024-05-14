@@ -7,7 +7,8 @@ import Image from 'next/image'
 import * as E from './styles'
 
 export default function Home() {
-  const isDevEnv = window.location.href.includes('localhost')
+  const isDevEnv =
+    typeof window != 'undefined' && window.location.href.includes('localhost')
 
   return (
     <main>

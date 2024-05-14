@@ -15,8 +15,8 @@ export default function RootLayout({
 }) {
   return (
     <ModalProvider>
-      <WishListProvider>
-        <html lang="en">
+      <html lang="en">
+        <WishListProvider>
           <ThemeRegistry>
             <body className={inter.className}>
               <Header />
@@ -24,8 +24,8 @@ export default function RootLayout({
               <Footer />
             </body>
           </ThemeRegistry>
-        </html>
-      </WishListProvider>
+        </WishListProvider>
+      </html>
     </ModalProvider>
   )
 }

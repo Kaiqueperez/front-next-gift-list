@@ -36,14 +36,18 @@ export const WishList = ({
         .map((wish) => (
           <ListItem
             key={wish.id}
-            onClick={() => {
-              handleSetGifter!((prev) => ({
-                ...prev,
-                id: wish.id,
-                url: wish.url,
-              }))
-              handleModal!()
-            }}
+            onClick={
+              isNeedShowAllWishes
+                ? () => {
+                    handleSetGifter!((prev) => ({
+                      ...prev,
+                      id: wish.id,
+                      url: wish.url,
+                    }))
+                    handleModal!()
+                  }
+                : () => undefined
+            }
             secondaryAction={
               <IconButton edge="end" aria-label="delete">
                 <RecommendOutlinedIcon fontSize="large" />
