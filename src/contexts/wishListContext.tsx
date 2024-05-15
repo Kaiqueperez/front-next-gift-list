@@ -9,6 +9,7 @@ import { createWish, getAllWishes } from '@/useCases'
 import { updateWishWithPerson } from '@/useCases/updateWishWithPerson'
 import React, { createContext, useContext, useEffect, useState } from 'react'
 type WishListContextProps = {
+  wishes: WishProps[]
   isLoading: boolean
   fetchAllWishes: () => Promise<void>
   associatePersonWithWish: (gifter: {
@@ -28,6 +29,7 @@ type WishListProviderProps = {
 export const WishListProvider: React.FC<WishListProviderProps> = ({
   children,
 }) => {
+  const [wishes, setWhishes] = useState<WishProps[]>([])
   const [isLoading, setIsloading] = useState(false)
   const [updateWishResponse, setUpdateWishResponse] = useState({
     message: '',
@@ -41,15 +43,11 @@ export const WishListProvider: React.FC<WishListProviderProps> = ({
     return response
   }
 
-  const handleLocalStorage = (wishList: WishProps[]) => {
-    localStorage.setItem('wishes-gift', JSON.stringify(wishList))
-  }
-
   const fetchAllWishes = async () => {
     setIsloading(true)
     const allWishes = await getAllWishes(wishesRepositoryImpl)
 
-    handleLocalStorage(allWishes)
+    setWhishes(allWishes)
   }
 
   const associatePersonWithWish = async (gifter: {
@@ -66,7 +64,7 @@ export const WishListProvider: React.FC<WishListProviderProps> = ({
       const { message, showBuyButton, buyMessage, gifts } =
         await updateWishWithPerson(gifter, wishesRepositoryImpl)
 
-      handleLocalStorage(gifts)
+      setWhishes(gifts)
       setUpdateWishResponse((prev) => ({
         ...prev,
         message,
@@ -78,12 +76,12 @@ export const WishListProvider: React.FC<WishListProviderProps> = ({
 
   useEffect(() => {
     fetchAllWishes()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [updateWishResponse.showBuyButton])
 
   return (
     <WishListContext.Provider
       value={{
+        wishes,
         isLoading,
         fetchAllWishes,
         associatePersonWithWish,

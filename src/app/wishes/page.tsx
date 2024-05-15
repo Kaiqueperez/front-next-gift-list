@@ -19,21 +19,8 @@ import { useState } from 'react'
 const WishListPage = () => {
   const { isLoading, associatePersonWithWish, updateWishResponse } =
     useWishListContext()
-  const emptyWish = JSON.stringify([
-    {
-      id: '',
-      name: '',
-      createdAt: '',
-      choosen: null,
-      personName: null,
-      url: '',
-    },
-  ])
-  const wishes =
-    typeof window != 'undefined'
-      ? JSON.parse(localStorage.getItem('wishes-gift')!)
-      : JSON.parse(emptyWish)
 
+  const { wishes } = useWishListContext()
   const { handleModal, isModalOpen } = useModalContext()
 
   const [gifter, setGifter] = useState({
