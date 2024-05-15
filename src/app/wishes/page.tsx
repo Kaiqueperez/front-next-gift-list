@@ -171,7 +171,18 @@ const WishListPage = () => {
             wishes={wishes}
           />
         ) : (
-          <Skeleton variant="rectangular" width={210} height={118} />
+          <Box
+            display={'flex'}
+            flexDirection={'column'}
+            alignContent={'center'}
+            gap={2}
+          >
+            <Skeleton variant="rounded" width={320} height={45} />
+            <Skeleton variant="rounded" width={320} height={45} />
+            <Skeleton variant="rounded" width={320} height={45} />
+            <Skeleton variant="rounded" width={320} height={45} />
+            <Skeleton variant="rounded" width={320} height={45} />
+          </Box>
         )}
       </Box>
     </Box>
