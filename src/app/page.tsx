@@ -65,16 +65,18 @@ export default function Home() {
             <Typography component={'p'}>
               Como todos sabem acabamos de nos mudar e vamos deixar aqui uma
               lista de desejos, que seriam muito bem recebidos caso fossemos
-              presenteados
+              presenteados.
             </Typography>
           </E.WarningBox>
-
           <E.CTAContent
             m={2}
             p={2}
             alignItems={'center'}
             border={'1px solid black'}
             borderRadius={2}
+            display={'flex'}
+            flexDirection={'column'}
+            gap={2}
           >
             <Image
               src={'/img-home.jpeg'}
@@ -85,12 +87,11 @@ export default function Home() {
                 width: '100%',
                 height: '400px',
               }}
-              sizes="(max-width: 500px) 90vw, 500px"
             />
 
             <Typography component={'p'}>
               Então para animar rapaziada clica no botão para dar uma olhada na
-              lista e escolher o seu
+              lista e escolher o seu!!!
             </Typography>
 
             <Button variant="contained" color="secondary">
@@ -101,11 +102,17 @@ export default function Home() {
                 Icon={ArrowOutwardIcon}
               />
             </Button>
+
+            <Typography component={'p'}>
+              Caso queira acompanhar os presentes já selecionados clica no botão
+              abaixo.
+            </Typography>
+
             <LinkPanel>
               <CustomLink
                 href={'/chosen-wishes'}
                 fontSizeIcon={'small'}
-                textContent={'Wishes selecionados'}
+                textContent={'Wishes já selecionados'}
                 Icon={ArrowOutwardIcon}
               />
             </LinkPanel>

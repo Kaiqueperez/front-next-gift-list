@@ -6,6 +6,7 @@ import { useWishListContext } from '@/contexts'
 import { useModalContext } from '@/contexts/modalContext'
 import { modalStyle } from '@/styles/constants'
 import SendIcon from '@mui/icons-material/Send'
+import TagFacesIcon from '@mui/icons-material/TagFaces'
 import {
   Box,
   Button,
@@ -17,10 +18,8 @@ import {
 import { useState } from 'react'
 
 const WishListPage = () => {
-  const { isLoading, associatePersonWithWish, updateWishResponse } =
+  const { isLoading, associatePersonWithWish, updateWishResponse, wishes } =
     useWishListContext()
-
-  const { wishes } = useWishListContext()
   const { handleModal, isModalOpen } = useModalContext()
 
   const [gifter, setGifter] = useState({
@@ -29,6 +28,10 @@ const WishListPage = () => {
     choosen: false,
     url: '',
   })
+
+  const { buyMessage, showBuyButton } = updateWishResponse
+
+  const { choosen, id, personName, url } = gifter
 
   const clearState = () => {
     handleModal()
@@ -66,7 +69,7 @@ const WishListPage = () => {
             justifyContent={'space-between'}
             gap={2}
           >
-            {gifter.choosen ? null : (
+            {choosen ? null : (
               <>
                 <TextField
                   onChange={(e) =>
@@ -79,10 +82,10 @@ const WishListPage = () => {
                   label="Seu nome"
                   variant="outlined"
                   color="info"
-                  value={gifter.personName}
+                  value={personName}
                 />
                 <Button
-                  disabled={!gifter.personName}
+                  disabled={!personName}
                   onClick={() => {
                     associatePersonWithWish(gifter)
                     setGifter((prev) => ({
@@ -100,7 +103,7 @@ const WishListPage = () => {
               </>
             )}
 
-            {updateWishResponse.showBuyButton && gifter.choosen ? (
+            {showBuyButton && choosen ? (
               <Box
                 display={'flex'}
                 flexDirection={'column'}
@@ -115,10 +118,11 @@ const WishListPage = () => {
                   gap={2}
                 >
                   <Typography component={'p'} color={'white'}>
-                    {updateWishResponse.buyMessage}
+                    {buyMessage}
                   </Typography>
                   <Button variant="contained" color="info">
                     <CustomLink
+                      changeColor
                       href={gifter.url}
                       fontSizeIcon={'small'}
                       textContent={'Comprar'}
@@ -147,9 +151,9 @@ const WishListPage = () => {
           <Typography component={'p'}>
             Oiii gente, se vocês já estão aqui,{' '}
             <b>se cosiderem muito importante para nós!!</b> Essa aqui é uma
-            listinha básica de tudo que estamos precisando icone Ficaremos muito
-            felizes e gratos por qualquer lembrança que vocês escolherem. Desde
-            já agradecemos
+            listinha básica de tudo que estamos precisando.{' '}
+            <TagFacesIcon color="secondary" /> Ficaremos muito felizes e gratos
+            por qualquer lembrança que vocês escolherem. Desde já agradecemos.
           </Typography>
         </Box>
 
@@ -164,7 +168,7 @@ const WishListPage = () => {
           </Typography>
         </Box>
 
-        {!isLoading ? (
+        {isLoading ? (
           <WishList
             handleModal={handleModal}
             handleSetGifter={setGifter}
@@ -176,7 +180,6 @@ const WishListPage = () => {
             flexDirection={'column'}
             alignItems={'center'}
             gap={2}
-            
           >
             <Skeleton variant="rounded" width={320} height={45} />
             <Skeleton variant="rounded" width={320} height={45} />

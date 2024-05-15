@@ -27,6 +27,7 @@ export const FormWishCreator = ({
         placeholder="Ex: Jogo de facas"
         label="Cadastre seu desejo"
         variant="filled"
+        color='info'
         value={wish.name}
         onChange={(e) => handleGiftValues('name', e.target.value)}
       />
@@ -34,12 +35,14 @@ export const FormWishCreator = ({
         placeholder="Ex: link do produto"
         label="Link do desejo"
         variant="filled"
+        color='info'
         value={wish.url}
         onChange={(e) => handleGiftValues('url', e.target.value)}
       />
       <Button
         onClick={() => handleWishCreator(wish)}
         variant="contained"
+        color='info'
         endIcon={<SendIcon />}
       >
         Send

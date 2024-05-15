@@ -7,7 +7,13 @@ import {
 } from '@/types'
 import { createWish, getAllWishes } from '@/useCases'
 import { updateWishWithPerson } from '@/useCases/updateWishWithPerson'
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 type WishListContextProps = {
   wishes: WishProps[]
   isLoading: boolean
@@ -78,17 +84,20 @@ export const WishListProvider: React.FC<WishListProviderProps> = ({
     fetchAllWishes()
   }, [updateWishResponse.showBuyButton])
 
+  const memoizedValues = useMemo(
+    () => ({
+      wishes,
+      isLoading,
+      fetchAllWishes,
+      associatePersonWithWish,
+      wishCreator,
+      updateWishResponse,
+    }),
+    [updateWishResponse.buyMessage, isLoading, wishes]
+  )
+
   return (
-    <WishListContext.Provider
-      value={{
-        wishes,
-        isLoading,
-        fetchAllWishes,
-        associatePersonWithWish,
-        wishCreator,
-        updateWishResponse,
-      }}
-    >
+    <WishListContext.Provider value={memoizedValues}>
       {children}
     </WishListContext.Provider>
   )

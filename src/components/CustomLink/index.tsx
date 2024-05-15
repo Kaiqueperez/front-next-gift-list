@@ -2,7 +2,7 @@ import { SvgIconTypeMap, Typography } from '@mui/material'
 import { OverridableComponent } from '@mui/material/OverridableComponent'
 import * as E from './styles'
 
-type CustomLinkProps = React.ComponentProps<'link'> & {
+type CustomLinkProps = React.ComponentProps<'a'> & {
   href: string
   fontSizeIcon: IconSize
   textContent: string
@@ -10,6 +10,7 @@ type CustomLinkProps = React.ComponentProps<'link'> & {
     muiName: string
   }
   sideIcon?: SideIconProps
+  changeColor?: boolean
 }
 
 type SideIconProps = 'left' | 'right'
@@ -21,9 +22,10 @@ export const CustomLink = ({
   textContent,
   Icon,
   sideIcon = 'right',
+  changeColor = false,
 }: CustomLinkProps) => {
   return (
-    <E.CustomLink href={href}>
+    <E.CustomLink changeColor={changeColor} href={href}>
       {sideIcon === 'left' ? (
         <>
           <Icon fontSize={fontSizeIcon} />{' '}
