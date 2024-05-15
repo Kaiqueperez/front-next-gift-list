@@ -78,6 +78,7 @@ export const WishListProvider: React.FC<WishListProviderProps> = ({
 
   useEffect(() => {
     fetchAllWishes()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
