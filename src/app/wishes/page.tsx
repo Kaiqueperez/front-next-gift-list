@@ -164,7 +164,7 @@ const WishListPage = () => {
           </Typography>
         </Box>
 
-        {isLoading ? (
+        {!isLoading ? (
           <WishList
             handleModal={handleModal}
             handleSetGifter={setGifter}
@@ -174,8 +174,9 @@ const WishListPage = () => {
           <Box
             display={'flex'}
             flexDirection={'column'}
-            alignContent={'center'}
+            alignItems={'center'}
             gap={2}
+            
           >
             <Skeleton variant="rounded" width={320} height={45} />
             <Skeleton variant="rounded" width={320} height={45} />
