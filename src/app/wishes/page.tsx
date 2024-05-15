@@ -20,7 +20,9 @@ const WishListPage = () => {
   const { isLoading, associatePersonWithWish, updateWishResponse } =
     useWishListContext()
 
-  const wishes = JSON.parse(localStorage.getItem('wishes-gift')!)
+  const wishes =
+    typeof window != 'undefined' &&
+    JSON.parse(localStorage.getItem('wishes-gift')!)
 
   const { handleModal, isModalOpen } = useModalContext()
 

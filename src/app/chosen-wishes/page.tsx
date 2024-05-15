@@ -3,7 +3,9 @@ import { WishList } from '@/components'
 import { Box, Typography } from '@mui/material'
 
 const ChosenWishListPage = () => {
-  const wishes = JSON.parse(localStorage.getItem('wishes-gift')!)
+  const wishes =
+    typeof window != 'undefined' &&
+    JSON.parse(localStorage.getItem('wishes-gift')!)
   return (
     <Box
       m={2}
