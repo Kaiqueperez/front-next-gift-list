@@ -1,6 +1,6 @@
 'use client'
 
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 
 export const Footer = () => {
   return (
@@ -10,9 +10,9 @@ export const Footer = () => {
       textAlign={'center'}
       width={'100%'}
       left={0}
-      bgcolor={'lightpink'}
+      bgcolor={'#cc632e'}
     >
-      <p>{`© ${new Date().getFullYear()}  Desenvolvido com ❤️ por Kaique.`}</p>
+      <Typography color={'#e6e0d2'} p={2} component={'p'}>{`© ${new Date().getFullYear()}  Desenvolvido com ❤️ por Kaique.`}</Typography>
     </Box>
   )
 }

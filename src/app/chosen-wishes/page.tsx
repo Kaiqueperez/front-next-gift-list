@@ -1,10 +1,9 @@
 'use client'
 import { WishList } from '@/components'
-import { useWishListContext } from '@/contexts'
 import { Box, Typography } from '@mui/material'
 
 const ChosenWishListPage = () => {
-  const { wishes } = useWishListContext()
+  const wishes = JSON.parse(localStorage.getItem('wishes-gift')!)
   return (
     <Box
       m={2}

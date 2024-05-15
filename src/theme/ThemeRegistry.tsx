@@ -17,15 +17,30 @@ const themeOptions: ThemeOptions = {
     fontSize: 16,
     fontFamily: roboto.style.fontFamily,
   },
+
+  components: {
+    MuiTypography: {
+      defaultProps: {
+        color: '#a27f19',
+      },
+    },
+  },
   palette: {
     background: {
-      default: '#f8bbd0',
+      default: '#d6c79c',
     },
+
     primary: {
       main: '#1976d2',
     },
     text: {
       primary: '#300000',
+    },
+    secondary: {
+      main: '#dd9f3a',
+    },
+    info: {
+      main: '#e6e0d2',
     },
   },
   breakpoints: {

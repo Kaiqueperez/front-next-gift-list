@@ -5,7 +5,6 @@ import { WishList } from '@/components/WishList'
 import { useWishListContext } from '@/contexts'
 import { useModalContext } from '@/contexts/modalContext'
 import { modalStyle } from '@/styles/constants'
-import NorthWestIcon from '@mui/icons-material/NorthWest'
 import SendIcon from '@mui/icons-material/Send'
 import {
   Box,
@@ -46,11 +45,20 @@ const WishListPage = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalStyle['modalWishListPage']}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Bela escolha, ficamos agradecidos
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            color={'white'}
+          >
+            Bela escolha, ficamos agradecidos!
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Coloque o seu nome para reserva esse presente
+          <Typography
+            id="modal-modal-description"
+            sx={{ mt: 2 }}
+            color={'white'}
+          >
+            Coloque o seu nome para reserva esse presente!!
           </Typography>
           <Box
             display={'flex'}
@@ -70,7 +78,8 @@ const WishListPage = () => {
                   }
                   id="filled-basic"
                   label="Seu nome"
-                  variant="filled"
+                  variant="outlined"
+                  color="info"
                   value={gifter.personName}
                 />
                 <Button
@@ -84,6 +93,7 @@ const WishListPage = () => {
                     }))
                   }}
                   variant="contained"
+                  color="info"
                   endIcon={<SendIcon />}
                 >
                   Enviar
@@ -105,10 +115,10 @@ const WishListPage = () => {
                   justifyContent={'center'}
                   gap={2}
                 >
-                  <Typography component={'p'}>
+                  <Typography component={'p'} color={'white'}>
                     {updateWishResponse.buyMessage}
                   </Typography>
-                  <Button variant="contained">
+                  <Button variant="contained" color="info">
                     <CustomLink
                       href={gifter.url}
                       fontSizeIcon={'small'}
@@ -118,8 +128,8 @@ const WishListPage = () => {
                   </Button>
                 </Box>
 
-                <Button onClick={clearState} variant="contained">
-                  Continuar escolhendo
+                <Button onClick={clearState} variant="contained" color="info">
+                  <Typography component={'p'}>Continuar escolhendo</Typography>
                 </Button>
               </Box>
             ) : null}
@@ -145,7 +155,12 @@ const WishListPage = () => {
         </Box>
 
         <Box m={2} p={2} justifyContent={'center'} display={'flex'}>
-          <Typography variant="h5" component={'h3'}>
+          <Typography
+            variant="h4"
+            component={'h3'}
+            color={'#dd9f3a'}
+            fontWeight={700}
+          >
             Lista de desejos
           </Typography>
         </Box>
@@ -159,14 +174,6 @@ const WishListPage = () => {
         ) : (
           <Skeleton variant="rectangular" width={210} height={118} />
         )}
-
-        <CustomLink
-          href={'/'}
-          fontSizeIcon="small"
-          textContent={'Voltar para home '}
-          Icon={NorthWestIcon}
-          sideIcon="left"
-        />
       </Box>
     </Box>
   )

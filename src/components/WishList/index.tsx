@@ -50,12 +50,12 @@ export const WishList = ({
             }
             secondaryAction={
               <IconButton edge="end" aria-label="delete">
-                <RecommendOutlinedIcon fontSize="large" />
+                <RecommendOutlinedIcon fontSize="large" color="secondary" />
               </IconButton>
             }
           >
             <ListItemAvatar>
-              <RedeemIcon fontSize="large" color="action" />
+              <RedeemIcon fontSize="large" color="secondary" />
             </ListItemAvatar>
             <ListItemText
               primary={`${wish.name} => 

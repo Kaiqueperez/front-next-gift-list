@@ -3,6 +3,7 @@
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward'
 import NorthWestIcon from '@mui/icons-material/NorthWest'
 import RedeemIcon from '@mui/icons-material/Redeem'
+import { Typography } from '@mui/material'
 import { usePathname } from 'next/navigation'
 import { CustomLink } from '../CustomLink'
 import * as E from './styles'
@@ -26,9 +27,11 @@ export const Header = () => {
           },
         }}
       >
-        <RedeemIcon fontSize="small" />
+        <RedeemIcon color='info' fontSize="small" />
 
-        <p>Chá de casa nova</p>
+        <Typography color={'#e6e0d2'} component={'p'} variant="h6">
+          Chá de casa nova
+        </Typography>
 
         {isWishListView ? (
           <CustomLink

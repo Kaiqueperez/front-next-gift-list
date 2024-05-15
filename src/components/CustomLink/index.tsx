@@ -1,4 +1,4 @@
-import { SvgIconTypeMap } from '@mui/material'
+import { SvgIconTypeMap, Typography } from '@mui/material'
 import { OverridableComponent } from '@mui/material/OverridableComponent'
 import * as E from './styles'
 
@@ -26,11 +26,17 @@ export const CustomLink = ({
     <E.CustomLink href={href}>
       {sideIcon === 'left' ? (
         <>
-          <Icon fontSize={fontSizeIcon} /> <span>{textContent}</span>
+          <Icon fontSize={fontSizeIcon} />{' '}
+          <Typography color={'info'} ml={1} component={'span'}>
+            {textContent}
+          </Typography>
         </>
       ) : (
         <>
-          <span>{textContent}</span> <Icon fontSize={fontSizeIcon} />
+          <Typography color={'info'} mr={1} component={'span'}>
+            {textContent}
+          </Typography>{' '}
+          <Icon fontSize={fontSizeIcon} />
         </>
       )}
     </E.CustomLink>
