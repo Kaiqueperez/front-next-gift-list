@@ -17,13 +17,17 @@ export default function Home() {
     setIsMount(true)
     if (isFrontEnd) {
       setWindowWidth(window.screen.width)
+
+      window.onresize = () => {
+        setWindowWidth(window.screen.width)
+      }
     }
-  }, [])
+  }, [windowWidth])
 
   if (isMount) {
     return (
       <>
-        {windowWidth <= 430 ? (
+        {windowWidth <= 568 ? (
           <main>
             {isDevEnv ? (
               <LinkPanel>

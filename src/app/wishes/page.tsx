@@ -119,7 +119,6 @@ const WishListPage = () => {
             {choosen ? null : (
               <>
                 <TextField
-                  className="teste"
                   onChange={(e) => handlePersonName(e.target.value)}
                   id="filled-basic"
                   label="Seu nome"
