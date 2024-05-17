@@ -42,6 +42,11 @@ const themeOptions: ThemeOptions = {
     info: {
       main: '#e6e0d2',
     },
+
+    error: {
+      main: '#455a64'
+    }
+
   },
   breakpoints: {
     values: {

@@ -1,11 +1,11 @@
 import WishListPage from '@/app/wishes/page'
 import {
-    ModalContextProps,
-    ModalProvider,
-    WishListContextProps,
-    WishListProvider,
-    useModalContext,
-    useWishListContext,
+  ModalContextProps,
+  ModalProvider,
+  WishListContextProps,
+  WishListProvider,
+  useModalContext,
+  useWishListContext,
 } from '@/contexts'
 import { WishProps } from '@/types'
 import { fireEvent, render, waitFor } from '@testing-library/react'
@@ -151,8 +151,45 @@ describe('Wishes page', () => {
         id: 'aoskdoaksd',
         personName: 'Michel Silva',
         url: 'http//:compranachina.com',
+        errorMessage: '',
       })
       expect(buttonSend).not.toBeVisible()
     })
+  })
+
+  it('should show error message when recieve invalid name ', async () => {
+    const { getByPlaceholderText, getByText, getByRole } = render(
+      <ModalProvider>
+        <WishListProvider>
+          <WishListPage />
+        </WishListProvider>
+      </ModalProvider>
+    )
+
+    const listItemWish = getByText(/Disponivel/i)
+
+    listItemWish.click()
+
+    await waitFor(() => {
+      const modal = getByRole('presentation')
+
+      expect(modal).toBeVisible()
+      expect(getByText(/Bela escolha/i)).toBeVisible()
+    })
+
+    const buttonSend = getByText(/Enviar/i)
+    expect(buttonSend).toBeDisabled()
+
+    const nameInput = getByPlaceholderText('Ex: Augusto') as HTMLInputElement
+    const nameValue = 'Michel<>111'
+
+    fireEvent.change(nameInput, {
+      target: {
+        value: nameValue,
+      },
+    })
+    expect(nameInput.value).toStrictEqual(nameValue)
+    expect(buttonSend).toBeDisabled()
+    expect(getByText('Permitido somente letras')).toBeVisible()
   })
 })

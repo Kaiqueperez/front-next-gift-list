@@ -5,13 +5,17 @@ import { WishList } from '@/components/WishList'
 import { useWishListContext } from '@/contexts'
 import { useModalContext } from '@/contexts/modalContext'
 import { modalStyle } from '@/styles/constants'
+import { validateName } from '@/utils'
+import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import SendIcon from '@mui/icons-material/Send'
 import TagFacesIcon from '@mui/icons-material/TagFaces'
 import {
+  Alert,
   Box,
   Button,
   Modal,
   Skeleton,
+  Snackbar,
   TextField,
   Typography,
 } from '@mui/material'
@@ -20,26 +24,69 @@ import { useState } from 'react'
 const WishListPage = () => {
   const { isLoading, associatePersonWithWish, updateWishResponse, wishes } =
     useWishListContext()
+
   const { handleModal, isModalOpen } = useModalContext()
+
+  const [isOpenToast, setIsOpenToast] = useState(false)
+
+  const handleToast = () => setIsOpenToast((prev) => !prev)
+
+  const handlePersonName = (personName: string) => {
+    setGifter((prev) => ({
+      ...prev,
+      personName,
+      errorMessage: validateName(personName),
+    }))
+  }
 
   const [gifter, setGifter] = useState({
     id: '',
     personName: '',
     choosen: false,
     url: '',
+    errorMessage: '',
   })
 
   const { buyMessage, showBuyButton } = updateWishResponse
 
-  const { choosen, personName, url } = gifter
+  const { choosen, personName, url, errorMessage } = gifter
 
   const clearState = () => {
     handleModal()
-    setGifter({ choosen: false, id: '', personName: '', url: '' })
+    setGifter({
+      choosen: false,
+      id: '',
+      personName: '',
+      url: '',
+      errorMessage: '',
+    })
+  }
+
+  const handleClipBoard = () => {
+    const element = document.getElementById('textToCopy')
+    const textClipBoard = element?.textContent?.match(/(52020-041)/)
+    navigator.clipboard.writeText(textClipBoard![1]).then(() => {
+      handleToast()
+    })
   }
 
   return (
     <Box marginBottom={8}>
+      <Snackbar
+        open={isOpenToast}
+        autoHideDuration={3000}
+        onClose={handleToast}
+        anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
+      >
+        <Alert
+          onClose={handleToast}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          CEP copiado com sucesso !!!
+        </Alert>
+      </Snackbar>
       <Modal
         onClose={handleModal}
         open={isModalOpen}
@@ -72,21 +119,19 @@ const WishListPage = () => {
             {choosen ? null : (
               <>
                 <TextField
-                  onChange={(e) =>
-                    setGifter((prev) => ({
-                      ...prev,
-                      personName: e.target.value,
-                    }))
-                  }
+                  className="teste"
+                  onChange={(e) => handlePersonName(e.target.value)}
                   id="filled-basic"
                   label="Seu nome"
                   variant="outlined"
                   color="info"
                   placeholder="Ex: Augusto"
                   value={personName}
+                  error={!!errorMessage}
+                  helperText={errorMessage ? errorMessage : ''}
                 />
                 <Button
-                  disabled={!personName}
+                  disabled={!personName || !!errorMessage}
                   onClick={() => {
                     associatePersonWithWish(gifter)
                     setGifter((prev) => ({
@@ -117,10 +162,31 @@ const WishListPage = () => {
                   flexDirection={'column'}
                   justifyContent={'center'}
                   gap={2}
+                  alignItems={'center'}
                 >
+                  <Typography
+                    textAlign={'center'}
+                    id="textToCopy"
+                    component={'p'}
+                    color={'white'}
+                  >
+                    CEP: <b>52020-041</b> e adicione apenas o número do AP:{' '}
+                    <b>501</b> e do edificio: <b>565</b>
+                  </Typography>
+
+                  <Button
+                    onClick={handleClipBoard}
+                    variant="contained"
+                    color="info"
+                    endIcon={<ContentCopyIcon color="secondary" />}
+                  >
+                    <Typography component={'p'}>Copiar CEP</Typography>
+                  </Button>
+
                   <Typography component={'p'} color={'white'}>
                     {buyMessage}
                   </Typography>
+
                   <Button variant="contained" color="info">
                     <CustomLink
                       changecolor={'true'}

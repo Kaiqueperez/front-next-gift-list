@@ -18,6 +18,7 @@ type WishListProps = {
       personName: string
       choosen: boolean
       url: string
+      errorMessage: string
     }>
   ) => void
   handleModal?: () => void
