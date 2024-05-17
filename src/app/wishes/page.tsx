@@ -31,7 +31,7 @@ const WishListPage = () => {
 
   const { buyMessage, showBuyButton } = updateWishResponse
 
-  const { choosen, id, personName, url } = gifter
+  const { choosen, personName, url } = gifter
 
   const clearState = () => {
     handleModal()
@@ -82,6 +82,7 @@ const WishListPage = () => {
                   label="Seu nome"
                   variant="outlined"
                   color="info"
+                  placeholder="Ex: Augusto"
                   value={personName}
                 />
                 <Button
@@ -122,8 +123,8 @@ const WishListPage = () => {
                   </Typography>
                   <Button variant="contained" color="info">
                     <CustomLink
-                      changeColor
-                      href={gifter.url}
+                      changecolor={'true'}
+                      href={url}
                       fontSizeIcon={'small'}
                       textContent={'Comprar'}
                       Icon={SendIcon}
@@ -169,24 +170,29 @@ const WishListPage = () => {
         </Box>
 
         {isLoading ? (
-          <WishList
-            handleModal={handleModal}
-            handleSetGifter={setGifter}
-            wishes={wishes}
-          />
-        ) : (
           <Box
             display={'flex'}
             flexDirection={'column'}
             alignItems={'center'}
             gap={2}
           >
-            <Skeleton variant="rounded" width={320} height={45} />
+            <Skeleton
+              variant="rounded"
+              width={320}
+              height={45}
+              data-testid="skeleton"
+            />
             <Skeleton variant="rounded" width={320} height={45} />
             <Skeleton variant="rounded" width={320} height={45} />
             <Skeleton variant="rounded" width={320} height={45} />
             <Skeleton variant="rounded" width={320} height={45} />
           </Box>
+        ) : (
+          <WishList
+            handleModal={handleModal}
+            handleSetGifter={setGifter}
+            wishes={wishes}
+          />
         )}
       </Box>
     </Box>

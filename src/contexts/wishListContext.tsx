@@ -14,7 +14,7 @@ import React, {
   useMemo,
   useState,
 } from 'react'
-type WishListContextProps = {
+export type WishListContextProps = {
   wishes: WishProps[]
   isLoading: boolean
   fetchAllWishes: () => Promise<void>
@@ -54,6 +54,7 @@ export const WishListProvider: React.FC<WishListProviderProps> = ({
     const allWishes = await getAllWishes(wishesRepositoryImpl)
 
     setWhishes(allWishes)
+    setIsloading(false)
   }
 
   const associatePersonWithWish = async (gifter: {
@@ -77,7 +78,9 @@ export const WishListProvider: React.FC<WishListProviderProps> = ({
         showBuyButton,
         buyMessage,
       }))
-    } catch (error) {}
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   useEffect(() => {
@@ -93,7 +96,7 @@ export const WishListProvider: React.FC<WishListProviderProps> = ({
       wishCreator,
       updateWishResponse,
     }),
-    [updateWishResponse.buyMessage, isLoading, wishes]
+    [updateWishResponse, isLoading, wishes]
   )
 
   return (

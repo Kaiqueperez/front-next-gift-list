@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react'
-type ModalContextProps = {
+export type ModalContextProps = {
   isModalOpen: boolean
   handleModal: () => void
 }

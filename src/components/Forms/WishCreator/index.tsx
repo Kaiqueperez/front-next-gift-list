@@ -45,7 +45,7 @@ export const FormWishCreator = ({
         color='info'
         endIcon={<SendIcon />}
       >
-        Send
+       Criar wish
       </Button>
     </Box>
   )

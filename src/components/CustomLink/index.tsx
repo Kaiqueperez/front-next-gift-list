@@ -10,7 +10,7 @@ type CustomLinkProps = React.ComponentProps<'a'> & {
     muiName: string
   }
   sideIcon?: SideIconProps
-  changeColor?: boolean
+  changecolor?: string
 }
 
 type SideIconProps = 'left' | 'right'
@@ -22,10 +22,10 @@ export const CustomLink = ({
   textContent,
   Icon,
   sideIcon = 'right',
-  changeColor = false,
+  changecolor = 'false',
 }: CustomLinkProps) => {
   return (
-    <E.CustomLink changeColor={changeColor} href={href}>
+    <E.CustomLink changecolor={changecolor} href={href}>
       {sideIcon === 'left' ? (
         <>
           <Icon fontSize={fontSizeIcon} />{' '}
