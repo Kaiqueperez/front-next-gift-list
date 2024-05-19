@@ -33,6 +33,18 @@ export const WishList = ({
   handleModal,
   isNeedShowAllWishes = null,
 }: WishListProps) => {
+  const handleChosenWish = (showAllWishes: boolean | null, wish: WishProps) => {
+    if (showAllWishes === null) {
+      handleSetGifter!((prev) => ({
+        ...prev,
+        id: wish.id,
+        url: wish.url,
+      }))
+      handleModal!()
+    }
+
+    return
+  }
   return (
     <Box display={'flex'} flexDirection={'column'} gap={2} mx={2}>
       {wishes
@@ -45,12 +57,17 @@ export const WishList = ({
                 wish.personName !== null ? wish.personName : 'Disponivel'
               }`}
             />
-            <CardMedia
-              component="img"
-              height="194"
-              image={wish.imageUrl}
-              alt="image of wish"
-            />
+            <Box display={'flex'} justifyContent={'center'}>
+              <CardMedia
+                sx={{
+                  width: '200px',
+                }}
+                component="img"
+                height="194"
+                image={wish.imageUrl}
+                alt="image of wish"
+              />
+            </Box>
 
             <CardContent>
               <Typography variant="body2" color="text.secondary">
@@ -61,18 +78,7 @@ export const WishList = ({
               {hiddenButton ? null : (
                 <Button
                   data-testid={wish.name + wishIndex}
-                  onClick={
-                    isNeedShowAllWishes === null
-                      ? () => {
-                          handleSetGifter!((prev) => ({
-                            ...prev,
-                            id: wish.id,
-                            url: wish.url,
-                          }))
-                          handleModal!()
-                        }
-                      : () => undefined
-                  }
+                  onClick={() => handleChosenWish(isNeedShowAllWishes, wish)}
                   color="secondary"
                   variant="contained"
                 >

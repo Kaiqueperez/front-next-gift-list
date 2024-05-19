@@ -74,7 +74,7 @@ export default function Home() {
                 gap={2}
               >
                 <Image
-                  src={'/img-home.jpeg'}
+                  src={'/img-homee.jpeg'}
                   alt={''}
                   width={250}
                   height={200}
