@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": " npx jest --verbose --isolatedModules=false ",
+    "test": " jest --verbose --isolatedModules=false ",
     "t:watch": "jest --verbose --isolatedModules=false --watchAll"
   },
   "dependencies": {

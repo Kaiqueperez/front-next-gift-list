@@ -28,16 +28,7 @@ const WishListPage = () => {
   const { handleModal, isModalOpen } = useModalContext()
 
   const [isOpenToast, setIsOpenToast] = useState(false)
-
-  const handleToast = () => setIsOpenToast((prev) => !prev)
-
-  const handlePersonName = (personName: string) => {
-    setGifter((prev) => ({
-      ...prev,
-      personName,
-      errorMessage: validateName(personName),
-    }))
-  }
+  const [isHidden, setIsHidden] = useState(false)
 
   const [gifter, setGifter] = useState({
     id: '',
@@ -46,6 +37,17 @@ const WishListPage = () => {
     url: '',
     errorMessage: '',
   })
+
+  const handleToast = () => setIsOpenToast((prev) => !prev)
+  const handleHidden = () => setIsHidden((prev) => !prev)
+
+  const handlePersonName = (personName: string) => {
+    setGifter((prev) => ({
+      ...prev,
+      personName,
+      errorMessage: validateName(personName),
+    }))
+  }
 
   const { buyMessage, showBuyButton } = updateWishResponse
 
@@ -60,6 +62,8 @@ const WishListPage = () => {
       url: '',
       errorMessage: '',
     })
+
+    if (isHidden) handleHidden()
   }
 
   const handleClipBoard = () => {
@@ -68,6 +72,16 @@ const WishListPage = () => {
     navigator.clipboard.writeText(textClipBoard![1]).then(() => {
       handleToast()
     })
+  }
+
+  const handleSendGift = () => {
+    associatePersonWithWish(gifter)
+    setGifter((prev) => ({
+      ...prev,
+      personName: '',
+      choosen: true,
+    }))
+    handleHidden()
   }
 
   return (
@@ -88,7 +102,7 @@ const WishListPage = () => {
         </Alert>
       </Snackbar>
       <Modal
-        onClose={handleModal}
+        onClose={clearState}
         open={isModalOpen}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -102,13 +116,16 @@ const WishListPage = () => {
           >
             Bela escolha, ficamos agradecidos!
           </Typography>
-          <Typography
-            id="modal-modal-description"
-            sx={{ mt: 2 }}
-            color={'white'}
-          >
-            Coloque o seu nome para reserva esse presente!!
-          </Typography>
+          {isHidden ? null : (
+            <Typography
+              id="modal-modal-description"
+              sx={{ mt: 2 }}
+              color={'white'}
+            >
+              Coloque o seu nome para reserva esse presente!!
+            </Typography>
+          )}
+
           <Box
             display={'flex'}
             flexDirection={'column'}
@@ -131,14 +148,7 @@ const WishListPage = () => {
                 />
                 <Button
                   disabled={!personName || !!errorMessage}
-                  onClick={() => {
-                    associatePersonWithWish(gifter)
-                    setGifter((prev) => ({
-                      ...prev,
-                      personName: '',
-                      choosen: true,
-                    }))
-                  }}
+                  onClick={handleSendGift}
                   variant="contained"
                   color="info"
                   endIcon={<SendIcon />}

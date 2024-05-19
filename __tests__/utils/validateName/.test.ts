@@ -1,4 +1,4 @@
-import { validateName } from '.'
+import { validateName } from '../../../src/utils/validName'
 describe('ValidName function', () => {
   it('Should return error message whem recieve invalid names', () => {
     expect(validateName('Jose saga23')).toStrictEqual(

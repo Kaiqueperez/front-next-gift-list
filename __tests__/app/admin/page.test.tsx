@@ -33,7 +33,9 @@ describe('admin page', () => {
   const nameWishValue = 'Jogo de facas'
   const urlWishValue =
     'https://www.amazon.com.br/dp/B0B4V7CCW3?ref_=Oct_DLandingS_D_3354e7d7_NA'
-
+  const imageUrlWishValue =
+    'https://w1tdk9ltnx.map.azionedge.net/img/2022/12/produto/13333/faca-h22259.jpg?ims=fit-in/635x865/filters:fill(white):format(JPG)'
+  const descriptionWishValue = 'Muito bom'
   it('should validate wish name and url values fields', async () => {
     const mockWishCreator = jest
       .fn()
@@ -80,7 +82,7 @@ describe('admin page', () => {
     expect(urlWishInput.value).toEqual(urlWishValue)
   })
 
-  it('should show error message when recieve empty url or without http', async () => {
+  it('should show error message when recieve empty some field empty', async () => {
     const errorMessage = 'Please provider a no empty name or url, url need http'
     const mockWishCreator = jest.fn().mockResolvedValue({
       message: errorMessage,
@@ -120,6 +122,7 @@ describe('admin page', () => {
     const urlWishInput = screen.getByPlaceholderText(
       'Ex: link do produto'
     ) as HTMLInputElement
+
     const buttonSubmit = screen.getByText(/Criar wish/i)
 
     fireEvent.change(nameWishInput, {
@@ -139,6 +142,8 @@ describe('admin page', () => {
       expect(mockWishCreator).toHaveBeenCalledWith({
         name: nameWishValue,
         url: '',
+        imageUrl: '',
+        description: '',
       })
       expect(mockIsModalOpen).toBeTruthy()
       expect(screen.getByText(errorMessage)).toBeInTheDocument()
@@ -155,6 +160,8 @@ describe('admin page', () => {
         name: nameWishValue,
         personName: null,
         url: urlWishValue,
+        imageUrl: imageUrlWishValue,
+        description: descriptionWishValue
       },
     ]
     const mockWishCreator = jest.fn().mockResolvedValue({
@@ -189,6 +196,12 @@ describe('admin page', () => {
     const urlWishInput = screen.getByPlaceholderText(
       'Ex: link do produto'
     ) as HTMLInputElement
+    const imageUrlWishInput = screen.getByPlaceholderText(
+      'Coloque a url da imagem'
+    ) as HTMLInputElement
+    const descriptionWishInput = screen.getByPlaceholderText(
+      'Descrição do produto'
+    ) as HTMLInputElement
     const buttonSubmit = screen.getByText(/Criar wish/i)
 
     fireEvent.change(nameWishInput, {
@@ -202,12 +215,26 @@ describe('admin page', () => {
         value: urlWishValue,
       },
     })
+
+    fireEvent.change(imageUrlWishInput, {
+      target: {
+        value: imageUrlWishValue,
+      },
+    })
+    fireEvent.change(descriptionWishInput, {
+      target: {
+        value: descriptionWishValue,
+      },
+    })
+
     buttonSubmit.click()
 
     await waitFor(() => {
       expect(mockWishCreator).toHaveBeenCalledWith({
         name: nameWishValue,
         url: urlWishValue,
+        imageUrl: imageUrlWishValue,
+        description: descriptionWishValue,
       })
       expect(mockIsModalOpen).toBeTruthy()
       expect(screen.getByText(wishCreatedMessage)).toBeInTheDocument()

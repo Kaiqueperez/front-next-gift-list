@@ -13,6 +13,8 @@ const AdminPage = () => {
   const [wish, setWish] = useState<WishCreateProps>({
     name: '',
     url: '',
+    description: '',
+    imageUrl: '',
   })
   const { handleModal, isModalOpen } = useModalContext()
   const [message, setMessage] = useState('')
@@ -21,7 +23,7 @@ const AdminPage = () => {
     const response = await wishCreator(wish)
     setMessage(response.message)
     handleModal()
-    setWish({ name: '', url: '' })
+    setWish({ name: '', url: '', imageUrl: '', description: '' })
   }
   const handleGiftValues = (key: string, value: string) => {
     setWish((prev) => ({

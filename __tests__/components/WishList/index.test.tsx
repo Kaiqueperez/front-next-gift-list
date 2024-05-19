@@ -1,11 +1,11 @@
 import { WishList } from '@/components'
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
 
 describe('WishList component', () => {
   const setGiftHanlderMock = jest.fn()
   const handleModalMock = jest.fn()
   it('should render and call setGiftHanlder and handleModal', () => {
-    render(
+    const { getByTestId } = render(
       <WishList
         wishes={[
           {
@@ -15,6 +15,8 @@ describe('WishList component', () => {
             choosen: null,
             personName: 'jose mario',
             url: 'http',
+            imageUrl: '',
+            description: '',
           },
         ]}
         handleModal={handleModalMock}
@@ -22,11 +24,36 @@ describe('WishList component', () => {
       />
     )
 
-    const wishContainer = screen.getByText(/jose mario/i)
+    const buttonCard = getByTestId(/jogo de facas0/i)
 
-    fireEvent.click(wishContainer)
+    fireEvent.click(buttonCard)
 
     expect(handleModalMock).toHaveBeenCalled()
     expect(setGiftHanlderMock).toHaveBeenCalled()
+  })
+  it('should not render chosen button', () => {
+    const { queryByTestId } = render(
+      <WishList
+        wishes={[
+          {
+            id: 'aosdaoskd',
+            name: 'jogo de facas',
+            createdAt: '',
+            choosen: null,
+            personName: 'jose mario',
+            url: 'http',
+            imageUrl: '',
+            description: '',
+          },
+        ]}
+        handleModal={handleModalMock}
+        handleSetGifter={setGiftHanlderMock}
+        hiddenButton
+      />
+    )
+
+    const buttonCard = queryByTestId(/jogo de facas0/i)
+
+    expect(buttonCard).not.toBeInTheDocument()
   })
 })

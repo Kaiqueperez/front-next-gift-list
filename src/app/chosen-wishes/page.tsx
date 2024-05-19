@@ -20,7 +20,7 @@ const ChosenWishListPage = () => {
         <Box textAlign={'center'}>
           <Typography component={'p'}>Produtos selecionados</Typography>
 
-          <WishList wishes={wishes} isNeedShowAllWishes />
+          <WishList wishes={wishes} isNeedShowAllWishes  hiddenButton/>
         </Box>
       ) : (
         <Typography component={'p'}>Nenhum produto foi selecionado</Typography>

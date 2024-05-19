@@ -1,28 +1,14 @@
 'use client'
 
 import { CustomLink, DesktopWarning, LinkPanel } from '@/components'
+import { useWindowSize } from '@/hooks'
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward'
 import { Box, Button, Typography } from '@mui/material'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
 import * as E from './styles'
 
 export default function Home() {
-  const [isMount, setIsMount] = useState(false)
-  const [windowWidth, setWindowWidth] = useState(0)
-  const isFrontEnd = typeof window != 'undefined'
-  const isDevEnv = isFrontEnd && window.location.href.includes('localhost')
-
-  useEffect(() => {
-    setIsMount(true)
-    if (isFrontEnd) {
-      setWindowWidth(window.screen.width)
-
-      window.onresize = () => {
-        setWindowWidth(window.screen.width)
-      }
-    }
-  }, [windowWidth])
+  const { isDevEnv, isMount, windowWidth } = useWindowSize()
 
   if (isMount) {
     return (

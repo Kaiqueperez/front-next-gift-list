@@ -41,6 +41,8 @@ describe('Wishes page', () => {
         name: 'Garfo',
         personName: null,
         url: '',
+        imageUrl: '',
+        description: '',
       },
     ]
 
@@ -84,6 +86,8 @@ describe('Wishes page', () => {
         name: 'Garfo',
         personName: null,
         url: 'http//:compranachina.com',
+        imageUrl: '',
+        description: '',
       },
     ]
 
@@ -110,7 +114,7 @@ describe('Wishes page', () => {
       isModalOpen: true,
     })
 
-    const { getByPlaceholderText, getByText, getByRole } = render(
+    const { getByPlaceholderText, getByText, getByRole, getByTestId } = render(
       <ModalProvider>
         <WishListProvider>
           <WishListPage />
@@ -118,9 +122,9 @@ describe('Wishes page', () => {
       </ModalProvider>
     )
 
-    const listItemWish = getByText(/Disponivel/i)
+    const cardButton = getByTestId(/Garfo0/i)
 
-    listItemWish.click()
+    cardButton.click()
 
     await waitFor(() => {
       const modal = getByRole('presentation')
@@ -158,7 +162,7 @@ describe('Wishes page', () => {
   })
 
   it('should show error message when recieve invalid name ', async () => {
-    const { getByPlaceholderText, getByText, getByRole } = render(
+    const { getByPlaceholderText, getByText, getByRole, getByTestId } = render(
       <ModalProvider>
         <WishListProvider>
           <WishListPage />
@@ -166,9 +170,9 @@ describe('Wishes page', () => {
       </ModalProvider>
     )
 
-    const listItemWish = getByText(/Disponivel/i)
+    const cardButton = getByTestId(/Garfo0/i)
 
-    listItemWish.click()
+    cardButton.click()
 
     await waitFor(() => {
       const modal = getByRole('presentation')
@@ -191,5 +195,104 @@ describe('Wishes page', () => {
     expect(nameInput.value).toStrictEqual(nameValue)
     expect(buttonSend).toBeDisabled()
     expect(getByText('Permitido somente letras')).toBeVisible()
+  })
+
+  it('should hidden paragraph put your name', async () => {
+    const {
+      getByPlaceholderText,
+      getByText,
+      getByRole,
+      getByTestId,
+      queryByText,
+    } = render(
+      <ModalProvider>
+        <WishListProvider>
+          <WishListPage />
+        </WishListProvider>
+      </ModalProvider>
+    )
+
+    const cardButton = getByTestId(/Garfo0/i)
+
+    cardButton.click()
+
+    await waitFor(() => {
+      const modal = getByRole('presentation')
+
+      expect(modal).toBeVisible()
+      expect(getByText(/Bela escolha/i)).toBeVisible()
+    })
+
+    const nameInput = getByPlaceholderText('Ex: Augusto') as HTMLInputElement
+    const nameValue = 'Marcin Kennedy'
+
+    fireEvent.change(nameInput, {
+      target: {
+        value: nameValue,
+      },
+    })
+
+    const buttonSend = getByText(/Enviar/i)
+    expect(buttonSend).not.toBeDisabled()
+
+    expect(nameInput.value).toStrictEqual(nameValue)
+
+    fireEvent.click(buttonSend)
+    expect(
+      queryByText(/Coloque o seu nome para reserva esse presente!!/i)
+    ).not.toBeInTheDocument()
+  })
+  it('should copy text to the clipboard and continue chosen wishes', async () => {
+    Object.assign(navigator, {
+      clipboard: {
+        writeText: jest.fn().mockImplementation(() => Promise.resolve()),
+      },
+    })
+
+    const { getByPlaceholderText, getByText, getByRole, getByTestId } = render(
+      <ModalProvider>
+        <WishListProvider>
+          <WishListPage />
+        </WishListProvider>
+      </ModalProvider>
+    )
+
+    const cardButton = getByTestId(/Garfo0/i)
+
+    cardButton.click()
+
+    await waitFor(() => {
+      const modal = getByRole('presentation')
+
+      expect(modal).toBeVisible()
+      expect(getByText(/Bela escolha/i)).toBeVisible()
+    })
+
+    const nameInput = getByPlaceholderText('Ex: Augusto') as HTMLInputElement
+    const nameValue = 'Marcin Kennedy'
+
+    fireEvent.change(nameInput, {
+      target: {
+        value: nameValue,
+      },
+    })
+
+    const buttonSend = getByText(/Enviar/i)
+
+    fireEvent.click(buttonSend)
+
+    const buttonCopy = getByText(/Copiar cep/i)
+
+    fireEvent.click(buttonCopy)
+
+    waitFor(() => {
+      expect(navigator.clipboard.writeText).toHaveBeenCalled()
+    })
+
+    const continueChosenButton = getByText(/Continuar escolhendo/i)
+
+    fireEvent.click(continueChosenButton)
+
+    expect(continueChosenButton).not.toBeVisible()
   })
 })

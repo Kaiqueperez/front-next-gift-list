@@ -5,11 +5,15 @@ export type WishProps = {
   choosen: boolean | null
   personName: string | null
   url: string
+  imageUrl: string
+  description: string
 }
 
 export type WishCreateProps = {
   name: string
   url: string
+  imageUrl: string
+  description: string
 }
 
 export type Gifter = {

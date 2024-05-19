@@ -25,27 +25,43 @@ export const FormWishCreator = ({
       </Typography>
       <TextField
         placeholder="Ex: Jogo de facas"
-        label="Cadastre seu desejo"
+        label="Cadastre seu desejo:"
         variant="filled"
-        color='info'
+        color="info"
         value={wish.name}
         onChange={(e) => handleGiftValues('name', e.target.value)}
       />
       <TextField
         placeholder="Ex: link do produto"
-        label="Link do desejo"
+        label="Link do desejo:"
         variant="filled"
-        color='info'
+        color="info"
         value={wish.url}
         onChange={(e) => handleGiftValues('url', e.target.value)}
+      />
+      <TextField
+        placeholder="Coloque a url da imagem"
+        label="Link da imagem:"
+        variant="filled"
+        color="info"
+        value={wish.imageUrl}
+        onChange={(e) => handleGiftValues('imageUrl', e.target.value)}
+      />
+      <TextField
+        placeholder="Descrição do produto"
+        label="Descrição:"
+        variant="filled"
+        color="info"
+        value={wish.description}
+        onChange={(e) => handleGiftValues('description', e.target.value)}
       />
       <Button
         onClick={() => handleWishCreator(wish)}
         variant="contained"
-        color='info'
+        color="info"
         endIcon={<SendIcon />}
       >
-       Criar wish
+        Criar wish
       </Button>
     </Box>
   )

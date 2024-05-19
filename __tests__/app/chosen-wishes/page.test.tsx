@@ -1,9 +1,9 @@
 import ChosenWishListPage from '@/app/chosen-wishes/page'
 import {
-    ModalProvider,
-    WishListProvider,
-    useModalContext,
-    useWishListContext,
+  ModalProvider,
+  WishListProvider,
+  useModalContext,
+  useWishListContext,
 } from '@/contexts'
 import { render, screen } from '@testing-library/react'
 import { NextResponse } from 'next/server'
@@ -29,35 +29,21 @@ jest.mock('../../../src/contexts', () => ({
 }))
 
 describe('chosen wishes page', () => {
-  it('should show empty list message when not have wishes', async () => {
-    const expectedFetchAllWishesValue = [
-      {
-        choosen: null,
-        createdAt: new Date().toISOString(),
-        id: 'aoskdoaksd',
-        name: 'nameWishValue',
-        personName: null,
-        url: 'urlWishValue',
-      },
-    ]
-
-    const mockfetchAllWishes = jest.fn().mockResolvedValue({
-      wishes: expectedFetchAllWishesValue,
-    })
+  it('should show empty message when not have wishes', async () => {
     const mockHandleModal = jest.fn()
     const mockIsModalOpen = true
 
     ;(useWishListContext as jest.Mock).mockReturnValue({
       wishCreator: jest.fn(),
       wishes: [],
-      fetchAllWishes: mockfetchAllWishes,
+      fetchAllWishes: [],
     })
     ;(useModalContext as jest.Mock).mockReturnValue({
       handleModal: mockHandleModal,
       isModalOpen: mockIsModalOpen,
     })
 
-    const { baseElement } = render(
+    render(
       <ModalProvider>
         <WishListProvider>
           <ChosenWishListPage />
