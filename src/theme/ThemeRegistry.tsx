@@ -50,11 +50,11 @@ const themeOptions: ThemeOptions = {
   },
   breakpoints: {
     values: {
-      xs: 0,
-      sm: 320,
-      md: 375,
-      lg: 425,
-      xl: 1000,
+      xs: 320,
+      sm: 576,
+      md: 768,
+      lg: 992,
+      xl: 1200,
     },
   },
 }

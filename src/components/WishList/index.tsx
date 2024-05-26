@@ -9,7 +9,10 @@ import {
   CardMedia,
   Typography,
 } from '@mui/material'
+
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 import { SetStateAction } from 'react'
+import * as E from './styles'
 
 type WishListProps = {
   wishes: WishProps[]
@@ -45,17 +48,46 @@ export const WishList = ({
 
     return
   }
+
   return (
-    <Box display={'flex'} flexDirection={'column'} gap={2} mx={2}>
+    <E.CustomBox>
       {wishes
         .filter((wish) => wish.choosen === isNeedShowAllWishes)
         .map((wish, wishIndex) => (
-          <Card key={wish.id}>
+          <Card
+            key={wish.id}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              maxWidth: 350,
+              height:500
+            }}
+          >
             <CardHeader
               title={wish.name}
-              subheader={`${
-                wish.personName !== null ? wish.personName : 'Disponivel'
-              }`}
+              subheader={
+                wish.personName !== null ? (
+                  <Box
+                    display={'flex'}
+                    alignItems={'center'}
+                    justifyContent={'center'}
+                    paddingTop={2}
+                    gap={1}
+                  >
+                    <CheckCircleOutlineIcon color="primary" />{' '}
+                    <Typography
+                      variant="body1"
+                      component={'p'}
+                      fontWeight={'bold'}
+                    >
+                      {wish.personName}
+                    </Typography>
+                  </Box>
+                ) : (
+                  'Disponivel'
+                )
+              }
             />
             <Box display={'flex'} justifyContent={'center'}>
               <CardMedia
@@ -88,6 +120,6 @@ export const WishList = ({
             </CardActions>
           </Card>
         ))}
-    </Box>
+    </E.CustomBox>
   )
 }

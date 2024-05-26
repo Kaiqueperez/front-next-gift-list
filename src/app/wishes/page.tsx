@@ -66,10 +66,16 @@ const WishListPage = () => {
     if (isHidden) handleHidden()
   }
 
-  const handleClipBoard = () => {
-    const element = document.getElementById('textToCopy')
-    const textClipBoard = element?.textContent?.match(/(52020-041)/)
-    navigator.clipboard.writeText(textClipBoard![1]).then(() => {
+  const handleClipBoard = (
+    elementId: string,
+    textMatch: RegExp,
+    handleToast: () => void
+  ) => {
+    const element = document.getElementById(elementId)
+    const textClipBoard = element?.textContent?.match(textMatch)
+    console.log(textClipBoard)
+
+    navigator.clipboard.writeText(textClipBoard![0]).then(() => {
       handleToast()
     })
   }
@@ -98,7 +104,7 @@ const WishListPage = () => {
           variant="filled"
           sx={{ width: '100%' }}
         >
-          CEP copiado com sucesso !!!
+          Copiado!!
         </Alert>
       </Snackbar>
       <Modal
@@ -147,7 +153,7 @@ const WishListPage = () => {
                   helperText={errorMessage ? errorMessage : ''}
                 />
                 <Button
-                  disabled={!personName || !!errorMessage}
+                  disabled={personName.length <= 3 || !!errorMessage}
                   onClick={handleSendGift}
                   variant="contained"
                   color="info"
@@ -179,12 +185,14 @@ const WishListPage = () => {
                     component={'p'}
                     color={'white'}
                   >
-                    CEP: <b>52020-041</b> e adicione apenas o número do AP:{' '}
+                    CEP: <b>52020-185</b> e adicione apenas o número do AP:{' '}
                     <b>501</b> e do edificio: <b>565</b>
                   </Typography>
 
                   <Button
-                    onClick={handleClipBoard}
+                    onClick={() =>
+                      handleClipBoard('textToCopy', /52020-185/, handleToast)
+                    }
                     variant="contained"
                     color="info"
                     endIcon={<ContentCopyIcon color="secondary" />}
@@ -224,13 +232,62 @@ const WishListPage = () => {
           border={'1px solid black'}
           borderRadius={2}
         >
-          <Typography component={'p'}>
+          <Typography component={'p'} textAlign={'center'}>
             Oiii gente, se vocês já estão aqui,{' '}
             <b>se cosiderem muito importante para nós!!</b> Essa aqui é uma
             listinha básica de tudo que estamos precisando.{' '}
             <TagFacesIcon color="secondary" /> Ficaremos muito felizes e gratos
             por qualquer lembrança que vocês escolherem. Desde já agradecemos.
           </Typography>
+        </Box>
+
+        <Box
+          m={2}
+          p={2}
+          alignItems={'center'}
+          border={'1px solid black'}
+          borderRadius={2}
+        >
+          <Alert
+            sx={{ justifyContent: 'center' }}
+            variant="filled"
+            severity="warning"
+          >
+            Observação: Você não precisa comprar pelo link que aparecerá após
+            escolher seu presente e enviar seu nome, fique a vontade para
+            comprar onde quiser.
+          </Alert>
+        </Box>
+
+        <Box
+          m={2}
+          p={2}
+          alignItems={'center'}
+          border={'1px solid black'}
+          borderRadius={2}
+          display={'flex'}
+          flexDirection={'column'}
+          gap={2}
+          alignContent={'center'}
+        >
+          <Typography textAlign={'center'} id="addressToCopy" component={'p'}>
+            Endereço para entrega: Rua conselheiro portela, 565. Apartamento 501
+          </Typography>
+
+          <Button
+            onClick={() =>
+              handleClipBoard(
+                'addressToCopy',
+                /Rua conselheiro portela, 565. Apartamento 501/,
+                handleToast
+              )
+            }
+            variant="contained"
+            color="info"
+            endIcon={<ContentCopyIcon color="secondary" />}
+          >
+            <Typography component={'p'}>Copiar endereço</Typography>
+          </Button>
         </Box>
 
         <Box m={2} p={2} justifyContent={'center'} display={'flex'}>

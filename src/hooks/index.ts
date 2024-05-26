@@ -1,2 +1,2 @@
-export * from './useWindowSize';
+export * from './useClientSide';
 

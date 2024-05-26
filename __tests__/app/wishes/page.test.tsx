@@ -114,7 +114,13 @@ describe('Wishes page', () => {
       isModalOpen: true,
     })
 
-    const { getByPlaceholderText, getByText, getByRole, getByTestId } = render(
+    const {
+      getByPlaceholderText,
+      getByText,
+      getByRole,
+      getByTestId,
+      getAllByText,
+    } = render(
       <ModalProvider>
         <WishListProvider>
           <WishListPage />
@@ -133,7 +139,7 @@ describe('Wishes page', () => {
       expect(getByText(/Bela escolha/i)).toBeVisible()
     })
 
-    const buttonSend = getByText(/Enviar/i)
+    const buttonSend = getAllByText(/Enviar/i)[1]
     expect(buttonSend).toBeDisabled()
 
     const nameInput = getByPlaceholderText('Ex: Augusto') as HTMLInputElement
@@ -162,7 +168,13 @@ describe('Wishes page', () => {
   })
 
   it('should show error message when recieve invalid name ', async () => {
-    const { getByPlaceholderText, getByText, getByRole, getByTestId } = render(
+    const {
+      getByPlaceholderText,
+      getByText,
+      getByRole,
+      getByTestId,
+      getAllByText,
+    } = render(
       <ModalProvider>
         <WishListProvider>
           <WishListPage />
@@ -181,7 +193,7 @@ describe('Wishes page', () => {
       expect(getByText(/Bela escolha/i)).toBeVisible()
     })
 
-    const buttonSend = getByText(/Enviar/i)
+    const buttonSend = getAllByText(/Enviar/i)[1]
     expect(buttonSend).toBeDisabled()
 
     const nameInput = getByPlaceholderText('Ex: Augusto') as HTMLInputElement
@@ -204,6 +216,7 @@ describe('Wishes page', () => {
       getByRole,
       getByTestId,
       queryByText,
+      getAllByText,
     } = render(
       <ModalProvider>
         <WishListProvider>
@@ -232,7 +245,7 @@ describe('Wishes page', () => {
       },
     })
 
-    const buttonSend = getByText(/Enviar/i)
+    const buttonSend = getAllByText(/Enviar/i)[1]
     expect(buttonSend).not.toBeDisabled()
 
     expect(nameInput.value).toStrictEqual(nameValue)
@@ -249,13 +262,20 @@ describe('Wishes page', () => {
       },
     })
 
-    const { getByPlaceholderText, getByText, getByRole, getByTestId } = render(
+    const {
+      getByPlaceholderText,
+      getByText,
+      getByRole,
+      getByTestId,
+      getAllByText,
+    } = render(
       <ModalProvider>
         <WishListProvider>
           <WishListPage />
         </WishListProvider>
       </ModalProvider>
     )
+
 
     const cardButton = getByTestId(/Garfo0/i)
 
@@ -277,13 +297,13 @@ describe('Wishes page', () => {
       },
     })
 
-    const buttonSend = getByText(/Enviar/i)
+    const buttonSend = getAllByText(/Enviar/i)
 
-    fireEvent.click(buttonSend)
+    fireEvent.click(buttonSend[1])
 
-    const buttonCopy = getByText(/Copiar cep/i)
+    const buttonCopy = getAllByText(/Copiar/i)
 
-    fireEvent.click(buttonCopy)
+    fireEvent.click(buttonCopy[1])
 
     waitFor(() => {
       expect(navigator.clipboard.writeText).toHaveBeenCalled()

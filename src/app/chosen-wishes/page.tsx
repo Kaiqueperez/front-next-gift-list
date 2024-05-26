@@ -8,19 +8,17 @@ const ChosenWishListPage = () => {
 
   const hasSelectedProducts = wishes.filter((wish) => wish.choosen).length > 0
   return (
-    <Box
-      m={2}
-      marginBottom={8}
-      p={2}
-      textAlign={'center'}
-      border={'1px solid black'}
-      borderRadius={2}
-    >
+    <Box m={2} marginBottom={8} p={2} textAlign={'center'}>
       {hasSelectedProducts ? (
         <Box textAlign={'center'}>
-          <Typography component={'p'}>Produtos selecionados</Typography>
-
-          <WishList wishes={wishes} isNeedShowAllWishes  hiddenButton/>
+          <Typography sx={{
+            fontSize: {
+              xs: 24,
+              sm: 32,
+              md: 48
+            }
+          }} component={'p'}  paddingBottom={4}>Produtos selecionados</Typography>
+          <WishList wishes={wishes} isNeedShowAllWishes hiddenButton />
         </Box>
       ) : (
         <Typography component={'p'}>Nenhum produto foi selecionado</Typography>

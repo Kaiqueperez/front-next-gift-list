@@ -2,11 +2,7 @@
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 import { ModalProvider, WishListProvider } from '@/contexts'
-
 import ThemeRegistry from '@/theme/ThemeRegistry'
-import { Inter } from 'next/font/google'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout({
   children,
@@ -15,10 +11,10 @@ export default function RootLayout({
 }) {
   return (
     <ModalProvider>
-      <html lang="en">
+      <html lang="pt-br">
         <WishListProvider>
           <ThemeRegistry>
-            <body className={inter.className}>
+            <body>
               <Header />
               {children}
               <Footer />
