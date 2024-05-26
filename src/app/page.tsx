@@ -29,22 +29,31 @@ export default function Home() {
                 <CustomLink
                   href={'/admin'}
                   fontSizeIcon={'small'}
-                  textContent={'Cadastro de desejos '}
+                  textContent={'Cadastro de desejos'}
                   Icon={ArrowOutwardIcon}
                 />
               </LinkPanel>
             </Box>
           ) : (
-            <LinkPanel>
-              <Button variant="contained" color="secondary">
+            <Box
+              sx={{
+                display: {
+                  xs: 'flex',
+                },
+                justifyContent: {
+                  xs: 'center',
+                },
+              }}
+            >
+              <LinkPanel>
                 <CustomLink
                   href={'/wishes'}
                   fontSizeIcon={'small'}
-                  textContent={'Ir para lista de Wishes '}
+                  textContent={'Ir para lista de Wishes'}
                   Icon={ArrowOutwardIcon}
                 />
-              </Button>
-            </LinkPanel>
+              </LinkPanel>
+            </Box>
           )}
           <Box
             display={'flex'}

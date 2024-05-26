@@ -73,8 +73,6 @@ const WishListPage = () => {
   ) => {
     const element = document.getElementById(elementId)
     const textClipBoard = element?.textContent?.match(textMatch)
-    console.log(textClipBoard)
-
     navigator.clipboard.writeText(textClipBoard![0]).then(() => {
       handleToast()
     })
@@ -98,12 +96,7 @@ const WishListPage = () => {
         onClose={handleToast}
         anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
       >
-        <Alert
-          onClose={handleToast}
-          severity="success"
-          variant="filled"
-          sx={{ width: '100%' }}
-        >
+        <Alert onClose={handleToast} severity="success" variant="filled">
           Copiado!!
         </Alert>
       </Snackbar>
@@ -271,14 +264,15 @@ const WishListPage = () => {
           alignContent={'center'}
         >
           <Typography textAlign={'center'} id="addressToCopy" component={'p'}>
-            Endereço para entrega: Rua conselheiro portela, 565. Apartamento 501
+            Endereço para entrega: Cep: 52020-185, Rua conselheiro portela, 565.
+            Apartamento 501
           </Typography>
 
           <Button
             onClick={() =>
               handleClipBoard(
                 'addressToCopy',
-                /Rua conselheiro portela, 565. Apartamento 501/,
+                /Cep: 52020-185, Rua conselheiro portela, 565. Apartamento 501/,
                 handleToast
               )
             }
