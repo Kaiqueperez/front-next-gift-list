@@ -8,7 +8,7 @@ import Image from 'next/image'
 import * as E from './styles'
 
 export default function Home() {
-  const { isDevEnv, isMount, windowWidth } = useClientSide()
+  const { isDevEnv, isMount } = useClientSide()
 
   if (isMount) {
     return (
