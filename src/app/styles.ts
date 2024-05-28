@@ -8,8 +8,21 @@ export const WarningBox = styled(Box)`
   }
 `
 export const CTAContent = styled(Box)`
+  display: flex;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 16px;
+  flex-direction: column;
+  gap: 16px;
+
   img {
-    border-radius: 16px;
+    width: 90%;
+    height: 400px;
   }
-  text-align: -webkit-center;
+
+  @media (min-width: 1024px) {
+    img {
+      height: 620px;
+    }
+  }
 `

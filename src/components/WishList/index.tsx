@@ -96,6 +96,7 @@ export const WishList = ({
                 }}
                 component="img"
                 height="194"
+                loading='lazy'
                 image={wish.imageUrl}
                 alt="image of wish"
               />

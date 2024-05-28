@@ -92,25 +92,12 @@ export default function Home() {
                 presenteados.
               </Typography>
             </E.WarningBox>
-            <E.CTAContent
-              m={2}
-              p={2}
-              alignItems={'center'}
-              border={'1px solid black'}
-              borderRadius={2}
-              display={'flex'}
-              flexDirection={'column'}
-              gap={2}
-            >
+            <E.CTAContent m={2} p={2}>
               <Image
                 src={'/img-homee.jpeg'}
                 alt={''}
                 width={250}
                 height={200}
-                style={{
-                  width: '90%',
-                  height: '400px',
-                }}
                 priority
               />
 
