@@ -212,6 +212,13 @@ const WishListPage = () => {
                   <Typography component={'p'}>Continuar escolhendo</Typography>
                 </Button>
               </Box>
+            ) : isLoading ? (
+              <>
+                <Skeleton variant="rounded" width={320} height={45} />
+                <Skeleton variant="rounded" width={320} height={45} />
+                <Skeleton variant="rounded" width={320} height={45} />
+                <Skeleton variant="rounded" width={320} height={45} />
+              </>
             ) : null}
           </Box>
         </Box>

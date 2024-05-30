@@ -64,6 +64,7 @@ export const WishListProvider: React.FC<WishListProviderProps> = ({
     url: string
   }) => {
     try {
+      setIsloading(true)
       const { personName } = gifter
 
       personName !== '' ? (gifter.choosen = true) : null
@@ -72,6 +73,8 @@ export const WishListProvider: React.FC<WishListProviderProps> = ({
         await updateWishWithPerson(gifter, wishesRepositoryImpl)
 
       setWhishes(gifts)
+
+      setIsloading(false)
       setUpdateWishResponse((prev) => ({
         ...prev,
         message,

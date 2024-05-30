@@ -315,4 +315,90 @@ describe('Wishes page', () => {
 
     expect(continueChosenButton).not.toBeVisible()
   })
+
+  it('Should remove a wish from list when recieve a person name', async () => {
+    const expectedFetchAllWishesValue: WishProps[] = [
+      {
+        choosen: null,
+        createdAt: new Date().toISOString(),
+        id: 'aoskdoaksd',
+        name: 'Garfo',
+        personName: null,
+        url: 'http//:compranachina.com',
+        imageUrl: '',
+        description: '',
+      },
+    ]
+
+    const mockAssociatePerson = jest.fn()
+
+    ;(useWishListContext as jest.Mock<WishListContextProps>).mockReturnValue({
+      wishCreator: jest.fn(),
+      wishes: expectedFetchAllWishesValue,
+      fetchAllWishes: jest.fn(),
+      associatePersonWithWish: mockAssociatePerson,
+      isLoading: false,
+      updateWishResponse: {
+        buyMessage: 'Deseja comprar?',
+        gifts: [],
+        message: 'Muito obrigado!!',
+        showBuyButton: true,
+      },
+    })
+
+    const {
+      getByPlaceholderText,
+      getByText,
+      getByRole,
+      getByTestId,
+      getAllByText,
+      queryByTestId,
+    } = render(
+      <ModalProvider>
+        <WishListProvider>
+          <WishListPage />
+        </WishListProvider>
+      </ModalProvider>
+    )
+
+    const cardButton = getByTestId(/Garfo0/i)
+
+    cardButton.click()
+
+    await waitFor(() => {
+      const modal = getByRole('presentation')
+
+      expect(modal).toBeVisible()
+      expect(getByText(/Bela escolha/i)).toBeVisible()
+    })
+
+    const buttonSend = getAllByText(/Enviar/i)[1]
+    expect(buttonSend).toBeDisabled()
+
+    const nameInput = getByPlaceholderText('Ex: Augusto') as HTMLInputElement
+    const nameValue = 'Michel Silva'
+
+    fireEvent.change(nameInput, {
+      target: {
+        value: nameValue,
+      },
+    })
+    expect(nameInput.value).toStrictEqual(nameValue)
+    expect(buttonSend).not.toBeDisabled()
+
+    buttonSend.click()
+
+    await waitFor(() => {
+      expect(mockAssociatePerson).toHaveBeenCalledWith({
+        choosen: false,
+        id: 'aoskdoaksd',
+        personName: 'Michel Silva',
+        url: 'http//:compranachina.com',
+        errorMessage: '',
+      })
+      expectedFetchAllWishesValue[0].choosen = true
+      expect(buttonSend).not.toBeVisible()
+      expect(queryByTestId(/Garfo0/)).not.toBeInTheDocument()
+    })
+  })
 })
