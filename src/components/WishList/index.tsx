@@ -10,7 +10,9 @@ import {
   Typography,
 } from '@mui/material'
 
+import { shortGiftName } from '@/utils'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
+import Link from 'next/link'
 import { SetStateAction } from 'react'
 import * as E from './styles'
 
@@ -27,10 +29,10 @@ type WishListProps = {
   ) => void
   handleModal?: () => void
   isNeedShowAllWishes?: boolean | null
-  hiddenButton?: boolean
+  hiddenChossenButton?: boolean
 }
 export const WishList = ({
-  hiddenButton,
+  hiddenChossenButton,
   wishes,
   handleSetGifter,
   handleModal,
@@ -61,7 +63,7 @@ export const WishList = ({
               flexDirection: 'column',
               justifyContent: 'space-between',
               maxWidth: 350,
-              height:500
+              height: 500,
             }}
           >
             <CardHeader
@@ -96,7 +98,7 @@ export const WishList = ({
                 }}
                 component="img"
                 height="194"
-                loading='lazy'
+                loading="lazy"
                 image={wish.imageUrl}
                 alt="image of wish"
               />
@@ -107,8 +109,18 @@ export const WishList = ({
                 {wish.description}
               </Typography>
             </CardContent>
-            <CardActions disableSpacing>
-              {hiddenButton ? null : (
+            <CardActions style={{
+              justifyContent: 'center'
+            }} disableSpacing>
+              {hiddenChossenButton ? (
+                <Button color="secondary" variant="contained">
+                  <Link style={{textDecoration: 'none'}} target='_blank' href={wish.url}>
+                    <Typography color={'white'}>
+                      Comprar {shortGiftName(wish.name)}
+                    </Typography>
+                  </Link>
+                </Button>
+              ) : (
                 <Button
                   data-testid={wish.name + wishIndex}
                   onClick={() => handleChosenWish(isNeedShowAllWishes, wish)}

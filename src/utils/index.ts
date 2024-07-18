@@ -1,3 +1,3 @@
 export * from './regexHelper';
-export * from './validName';
+export * from './textValidator';
 

@@ -18,7 +18,7 @@ const ChosenWishListPage = () => {
               md: 48
             }
           }} component={'p'}  paddingBottom={4}>Produtos selecionados</Typography>
-          <WishList wishes={wishes} isNeedShowAllWishes hiddenButton />
+          <WishList wishes={wishes} isNeedShowAllWishes hiddenChossenButton />
         </Box>
       ) : (
         <Typography component={'p'}>Nenhum produto foi selecionado</Typography>

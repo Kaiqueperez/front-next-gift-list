@@ -82,6 +82,6 @@ describe('chosen wishes page', () => {
 
     expect(screen.getByText('Produtos selecionados')).toBeVisible()
     expect(screen.getByText(/MAria antonia/i)).toBeVisible()
-    expect(screen.getByText(/Garfo/i)).toBeVisible()
+    expect(screen.getAllByText(/Garfo/i)[0]).toBeVisible()
   })
 })

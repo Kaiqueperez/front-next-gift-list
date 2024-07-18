@@ -11,3 +11,8 @@ export const validateName = (personName: string) => {
 
   return errorMessage
 }
+
+export const shortGiftName = (name: string) => {
+  const MAX_LENGTH = 18
+  return name.length > MAX_LENGTH ? name.substring(0, MAX_LENGTH) + '...' : name
+}

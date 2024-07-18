@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": " jest --verbose --isolatedModules=false ",
-    "t:watch": "jest --verbose --isolatedModules=false --watchAll"
+    "test": " jest  --isolatedModules=false ",
+    "t:watch": "jest  --isolatedModules=false --watchAll"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",

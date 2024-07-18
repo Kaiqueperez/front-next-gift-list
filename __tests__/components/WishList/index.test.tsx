@@ -48,7 +48,7 @@ describe('WishList component', () => {
         ]}
         handleModal={handleModalMock}
         handleSetGifter={setGiftHanlderMock}
-        hiddenButton
+        hiddenChossenButton
       />
     )
 
